@@ -6,8 +6,9 @@ export const getArticleData = async (articleName) => {
     return data?.data[0];
 }
 
-export const getRandomArticle = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/articles?populate[0]=Item&populate[1]=sites&populate[2]=sites.logo&populate[3]=sites.logo.media&populate[4]=primary_site&populate[5]=Author&populate[6]=sites.categories&populate[7]=Item.image.media&populate[8]=category&pagination[limit]=1`, { cache: 'force-cache', next: { revalidate: 3600 } });
+export const getRandomArticle = async (category) => {
+    if (!category) return undefined;
+    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/articles?populate[0]=Item&populate[1]=sites&populate[2]=sites.logo&populate[3]=sites.logo.media&populate[4]=primary_site&populate[5]=Author&populate[6]=sites.categories&populate[7]=Item.image.media&populate[8]=category&pagination[limit]=1&filters[category][slug][$eq]=${category}`, { cache: 'force-cache', next: { revalidate: 3600 } });
     const data = await res.json();
     return data?.data[0];
 }

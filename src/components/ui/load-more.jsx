@@ -14,7 +14,6 @@ export function LoadMore() {
 
   useEffect(() => {
     if (inView) {
-      console.log("inView : ", inView);
       const currentItem = entry.target.parentElement.id;
       const currentPosition = currentItem.split("_")[1];
 

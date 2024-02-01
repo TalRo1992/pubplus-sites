@@ -63,7 +63,9 @@ export default function ArticlePage({ params }) {
   }
 
   const fetchNewArticle = async () => {
-    const res = await getRandomArticle();
+    console.log(mainArticleData, 'mainArticleData')
+    const category = mainArticleData?.category?.data?.attributes.slug;
+    const res = await getRandomArticle(category);
     const articleAttributes = res?.attributes;
     const copiedArticle = JSON.parse(JSON.stringify(articleAttributes));
     let copiedArticleItems = JSON.parse(JSON.stringify(copiedArticle.Item));
@@ -73,21 +75,18 @@ export default function ArticlePage({ params }) {
     setState({ ...state, originalLastArticle: articleAttributes });
   }
 
-
-
   return (
     <>
-      {/* {mainArticleData && <Article article={mainArticleData} />} */}
       {articles.length && articles.map((article, index) => {
         let cumlativelyCount = [];
         articles.reduce((prevCount, article, index) => {
           cumlativelyCount.push(prevCount + article.Item.length);
           return prevCount + article.Item.length;
         }, 0);
+
         return <Article key={index}
           article={article}
-          articlePosition={index}
-          lastItemPosition={index > 0 && (articles[index - 1].Item.length - 1) || null} initialItemPosition={index === 0 ? 0 : cumlativelyCount[index - 1]} />
+          initialItemPosition={index === 0 ? 0 : cumlativelyCount[index - 1]} />
       })}
     </>
   )

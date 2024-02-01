@@ -1,19 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
-// import { headers } from "next/headers";
 import { format, parseISO } from 'date-fns'
 import { notFound } from "next/navigation";
 import { LoadMore } from "@/components/ui/load-more";
-import { useAppContext } from '@/context/AppContext';
-import { useEffect } from 'react';
 
 
-export default function Article({ article, articlePosition, lastItemPosition, initialItemPosition }) {
-  // console.log('current article on loop : ', article.slug)
-  // console.log('articlePosition : ', articlePosition)
-  // console.log('lastItemPosition : ', lastItemPosition)
-  // const { state, setState } = useAppContext();
-  // console.log('LastItemPosition is : ', state.LastItemPosition)
+export default function Article({ article, initialItemPosition }) {
+
   const domain = window.location.host
   const available_site = article?.sites?.data.some((site) => site.attributes.domain === domain);
   if(!available_site){
@@ -22,9 +14,6 @@ export default function Article({ article, articlePosition, lastItemPosition, in
   const primarySite = article?.primary_site?.data?.attributes?.domain;
   const isPrimarySite = primarySite === domain;
   const author = article?.Author?.data?.attributes?.pseudonym;
-  const { generateUniqueId } = useAppContext();
-
-  // Function to generate a unique ID
 
   return (
     <article className="bg-gray-50 pb-12 sm:pb-16 lg:pb-24">
@@ -48,9 +37,7 @@ export default function Article({ article, articlePosition, lastItemPosition, in
                   const imageFormats = item?.image?.data?.attributes?.formats;
                   return (
                     <section className='mb-8' key={item.title}
-                    //  id={`${article.slug}~~item_${generateUniqueId()}`}>  
                      id={`${article.slug}/item_${initialItemPosition + index}`}>  
-                     {/* id={`${article.slug}/item_${articlePosition === 0  ? index :  articlePosition > 0 && (articlePosition + lastItemPosition + index)}`}>   */}
                       <h2 className='text-2xl font-semibold leading-9'>{item.title}</h2>
                       <div className="mt-4 text-base leading-loose text-gray-600">
                         <p>{item.pre_image_text}</p>

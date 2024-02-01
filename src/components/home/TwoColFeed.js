@@ -49,13 +49,7 @@ export default async function TwoColFeed() {
   const headersList = headers();
   const domain = headersList.get('host');
   let categoriesData = await getCategoriesData(domain);
-  console.log(domain);
-  // const filteredCategories = categoriesData?.filter(category => {
-  //   const sites = category.attributes.sites.data;
-  //   // console.log(sites, 'sites')
-  //   // console.log(sites.some(site => site.attributes.domain === domain), 'result')
-  //   return sites.some(site => site.attributes.domain === domain);
-  // });
+
   return (
     <div className="col-span-3">
       <div className="mx-auto max-w-xl px-4 sm:px-6 md:max-w-3xl md:px-8 lg:max-w-none lg:px-0">
